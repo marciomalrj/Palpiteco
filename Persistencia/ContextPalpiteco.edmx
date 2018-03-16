@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PalpitecoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Campeonatos">
+          <Key>
+            <PropertyRef Name="IdCampeonato" />
+          </Key>
+          <Property Name="IdCampeonato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Data" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Clubes">
+          <Key>
+            <PropertyRef Name="IdClube" />
+          </Key>
+          <Property Name="IdClube" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SiglaEstado" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Serie" Type="nvarchar" MaxLength="1" />
+          <Property Name="CaminhoBandeira" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Jogadores">
+          <Key>
+            <PropertyRef Name="IdJogador" />
+          </Key>
+          <Property Name="IdJogador" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Senha" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="DataCadastro" Type="datetime" Nullable="false" />
+          <Property Name="IdPerfil" Type="int" Nullable="false" />
+          <Property Name="FotoPerfil" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="JogadorXPalpite">
+          <Key>
+            <PropertyRef Name="IdJogador" />
+            <PropertyRef Name="IdPalpite" />
+          </Key>
+          <Property Name="IdJogador" Type="int" Nullable="false" />
+          <Property Name="IdPalpite" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jogos">
+          <Key>
+            <PropertyRef Name="IdJogo" />
+          </Key>
+          <Property Name="IdJogo" Type="int" Nullable="false" />
+          <Property Name="TimeCasa" Type="int" />
+          <Property Name="GolCasa" Type="int" />
+          <Property Name="TimeVisitante" Type="int" />
+          <Property Name="GolVisitante" Type="int" />
+          <Property Name="Data" Type="datetime" />
+          <Property Name="IdRodada" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Palpites">
+          <Key>
+            <PropertyRef Name="IdPalpite" />
+          </Key>
+          <Property Name="IdPalpite" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TimeCasa" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GolCasa" Type="int" Nullable="false" />
+          <Property Name="TimeVisitante" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="GolVisitante" Type="int" Nullable="false" />
+          <Property Name="PontosFeitos" Type="int" Nullable="false" />
+          <Property Name="Data" Type="datetime" Nullable="false" />
+          <Property Name="IdRodada" Type="int" Nullable="false" />
+          <Property Name="IdJogo" Type="int" Nullable="false" />
+          <Property Name="IdJogador" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="IdPerfil" />
+          </Key>
+          <Property Name="IdPerfil" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NomePerfil" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rodadas">
+          <Key>
+            <PropertyRef Name="IdRodada" />
+          </Key>
+          <Property Name="IdRodada" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NumRodada" Type="int" Nullable="false" />
+          <Property Name="NomeRodada" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdCampeonato" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Jogadores_dbo_Perfil_IdPerfil">
+          <End Role="Perfil" Type="Self.Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Jogadores" Type="Self.Jogadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="IdPerfil" />
+            </Principal>
+            <Dependent Role="Jogadores">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jogos_ToTable">
+          <End Role="Rodadas" Type="Self.Rodadas" Multiplicity="1" />
+          <End Role="Jogos" Type="Self.Jogos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rodadas">
+              <PropertyRef Name="IdRodada" />
+            </Principal>
+            <Dependent Role="Jogos">
+              <PropertyRef Name="IdRodada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Palpites_Jogadores">
+          <End Role="Jogadores" Type="Self.Jogadores" Multiplicity="1" />
+          <End Role="Palpites" Type="Self.Palpites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jogadores">
+              <PropertyRef Name="IdJogador" />
+            </Principal>
+            <Dependent Role="Palpites">
+              <PropertyRef Name="IdJogador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Palpites_Jogo">
+          <End Role="Jogos" Type="Self.Jogos" Multiplicity="1" />
+          <End Role="Palpites" Type="Self.Palpites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jogos">
+              <PropertyRef Name="IdJogo" />
+            </Principal>
+            <Dependent Role="Palpites">
+              <PropertyRef Name="IdJogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Palpites_Rodada">
+          <End Role="Rodadas" Type="Self.Rodadas" Multiplicity="1" />
+          <End Role="Palpites" Type="Self.Palpites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rodadas">
+              <PropertyRef Name="IdRodada" />
+            </Principal>
+            <Dependent Role="Palpites">
+              <PropertyRef Name="IdRodada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rodadas_Campeonato">
+          <End Role="Campeonatos" Type="Self.Campeonatos" Multiplicity="1" />
+          <End Role="Rodadas" Type="Self.Rodadas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campeonatos">
+              <PropertyRef Name="IdCampeonato" />
+            </Principal>
+            <Dependent Role="Rodadas">
+              <PropertyRef Name="IdCampeonato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PalpitecoModelStoreContainer">
+          <EntitySet Name="Campeonatos" EntityType="Self.Campeonatos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clubes" EntityType="Self.Clubes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jogadores" EntityType="Self.Jogadores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="JogadorXPalpite" EntityType="Self.JogadorXPalpite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Jogos" EntityType="Self.Jogos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Palpites" EntityType="Self.Palpites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Perfil" EntityType="Self.Perfil" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rodadas" EntityType="Self.Rodadas" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Jogadores_dbo_Perfil_IdPerfil" Association="Self.FK_dbo_Jogadores_dbo_Perfil_IdPerfil">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Jogadores" EntitySet="Jogadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jogos_ToTable" Association="Self.FK_Jogos_ToTable">
+            <End Role="Rodadas" EntitySet="Rodadas" />
+            <End Role="Jogos" EntitySet="Jogos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Palpites_Jogadores" Association="Self.FK_Palpites_Jogadores">
+            <End Role="Jogadores" EntitySet="Jogadores" />
+            <End Role="Palpites" EntitySet="Palpites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Palpites_Jogo" Association="Self.FK_Palpites_Jogo">
+            <End Role="Jogos" EntitySet="Jogos" />
+            <End Role="Palpites" EntitySet="Palpites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Palpites_Rodada" Association="Self.FK_Palpites_Rodada">
+            <End Role="Rodadas" EntitySet="Rodadas" />
+            <End Role="Palpites" EntitySet="Palpites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rodadas_Campeonato" Association="Self.FK_Rodadas_Campeonato">
+            <End Role="Campeonatos" EntitySet="Campeonatos" />
+            <End Role="Rodadas" EntitySet="Rodadas" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PalpitecoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PalpitecoEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Campeonatos" EntityType="PalpitecoModel.Campeonatos" />
+          <EntitySet Name="Clubes" EntityType="PalpitecoModel.Clubes" />
+          <EntitySet Name="Jogadores" EntityType="PalpitecoModel.Jogadores" />
+          <EntitySet Name="JogadorXPalpite" EntityType="PalpitecoModel.JogadorXPalpite" />
+          <EntitySet Name="Jogos" EntityType="PalpitecoModel.Jogos" />
+          <EntitySet Name="Palpites" EntityType="PalpitecoModel.Palpites" />
+          <EntitySet Name="Perfil" EntityType="PalpitecoModel.Perfil" />
+          <EntitySet Name="Rodadas" EntityType="PalpitecoModel.Rodadas" />
+          <AssociationSet Name="FK_Rodadas_Campeonato" Association="PalpitecoModel.FK_Rodadas_Campeonato">
+            <End Role="Campeonatos" EntitySet="Campeonatos" />
+            <End Role="Rodadas" EntitySet="Rodadas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Jogadores_dbo_Perfil_IdPerfil" Association="PalpitecoModel.FK_dbo_Jogadores_dbo_Perfil_IdPerfil">
+            <End Role="Perfil" EntitySet="Perfil" />
+            <End Role="Jogadores" EntitySet="Jogadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Palpites_Jogadores" Association="PalpitecoModel.FK_Palpites_Jogadores">
+            <End Role="Jogadores" EntitySet="Jogadores" />
+            <End Role="Palpites" EntitySet="Palpites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jogos_ToTable" Association="PalpitecoModel.FK_Jogos_ToTable">
+            <End Role="Rodadas" EntitySet="Rodadas" />
+            <End Role="Jogos" EntitySet="Jogos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Palpites_Jogo" Association="PalpitecoModel.FK_Palpites_Jogo">
+            <End Role="Jogos" EntitySet="Jogos" />
+            <End Role="Palpites" EntitySet="Palpites" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Palpites_Rodada" Association="PalpitecoModel.FK_Palpites_Rodada">
+            <End Role="Rodadas" EntitySet="Rodadas" />
+            <End Role="Palpites" EntitySet="Palpites" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Campeonatos">
+          <Key>
+            <PropertyRef Name="IdCampeonato" />
+          </Key>
+          <Property Name="IdCampeonato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Rodadas" Relationship="PalpitecoModel.FK_Rodadas_Campeonato" FromRole="Campeonatos" ToRole="Rodadas" />
+        </EntityType>
+        <EntityType Name="Clubes">
+          <Key>
+            <PropertyRef Name="IdClube" />
+          </Key>
+          <Property Name="IdClube" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SiglaEstado" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Serie" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="CaminhoBandeira" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Jogadores">
+          <Key>
+            <PropertyRef Name="IdJogador" />
+          </Key>
+          <Property Name="IdJogador" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Usuario" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Senha" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DataCadastro" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdPerfil" Type="Int32" Nullable="false" />
+          <Property Name="FotoPerfil" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Perfil" Relationship="PalpitecoModel.FK_dbo_Jogadores_dbo_Perfil_IdPerfil" FromRole="Jogadores" ToRole="Perfil" />
+          <NavigationProperty Name="Palpites" Relationship="PalpitecoModel.FK_Palpites_Jogadores" FromRole="Jogadores" ToRole="Palpites" />
+        </EntityType>
+        <EntityType Name="JogadorXPalpite">
+          <Key>
+            <PropertyRef Name="IdJogador" />
+            <PropertyRef Name="IdPalpite" />
+          </Key>
+          <Property Name="IdJogador" Type="Int32" Nullable="false" />
+          <Property Name="IdPalpite" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jogos">
+          <Key>
+            <PropertyRef Name="IdJogo" />
+          </Key>
+          <Property Name="IdJogo" Type="Int32" Nullable="false" />
+          <Property Name="TimeCasa" Type="Int32" />
+          <Property Name="GolCasa" Type="Int32" />
+          <Property Name="TimeVisitante" Type="Int32" />
+          <Property Name="GolVisitante" Type="Int32" />
+          <Property Name="Data" Type="DateTime" Precision="3" />
+          <Property Name="IdRodada" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Rodadas" Relationship="PalpitecoModel.FK_Jogos_ToTable" FromRole="Jogos" ToRole="Rodadas" />
+          <NavigationProperty Name="Palpites" Relationship="PalpitecoModel.FK_Palpites_Jogo" FromRole="Jogos" ToRole="Palpites" />
+        </EntityType>
+        <EntityType Name="Palpites">
+          <Key>
+            <PropertyRef Name="IdPalpite" />
+          </Key>
+          <Property Name="IdPalpite" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TimeCasa" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GolCasa" Type="Int32" Nullable="false" />
+          <Property Name="TimeVisitante" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GolVisitante" Type="Int32" Nullable="false" />
+          <Property Name="PontosFeitos" Type="Int32" Nullable="false" />
+          <Property Name="Data" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdRodada" Type="Int32" Nullable="false" />
+          <Property Name="IdJogo" Type="Int32" Nullable="false" />
+          <Property Name="IdJogador" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Jogadores" Relationship="PalpitecoModel.FK_Palpites_Jogadores" FromRole="Palpites" ToRole="Jogadores" />
+          <NavigationProperty Name="Jogos" Relationship="PalpitecoModel.FK_Palpites_Jogo" FromRole="Palpites" ToRole="Jogos" />
+          <NavigationProperty Name="Rodadas" Relationship="PalpitecoModel.FK_Palpites_Rodada" FromRole="Palpites" ToRole="Rodadas" />
+        </EntityType>
+        <EntityType Name="Perfil">
+          <Key>
+            <PropertyRef Name="IdPerfil" />
+          </Key>
+          <Property Name="IdPerfil" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NomePerfil" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Jogadores" Relationship="PalpitecoModel.FK_dbo_Jogadores_dbo_Perfil_IdPerfil" FromRole="Perfil" ToRole="Jogadores" />
+        </EntityType>
+        <EntityType Name="Rodadas">
+          <Key>
+            <PropertyRef Name="IdRodada" />
+          </Key>
+          <Property Name="IdRodada" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumRodada" Type="Int32" Nullable="false" />
+          <Property Name="NomeRodada" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdCampeonato" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Campeonatos" Relationship="PalpitecoModel.FK_Rodadas_Campeonato" FromRole="Rodadas" ToRole="Campeonatos" />
+          <NavigationProperty Name="Jogos" Relationship="PalpitecoModel.FK_Jogos_ToTable" FromRole="Rodadas" ToRole="Jogos" />
+          <NavigationProperty Name="Palpites" Relationship="PalpitecoModel.FK_Palpites_Rodada" FromRole="Rodadas" ToRole="Palpites" />
+        </EntityType>
+        <Association Name="FK_Rodadas_Campeonato">
+          <End Type="PalpitecoModel.Campeonatos" Role="Campeonatos" Multiplicity="1" />
+          <End Type="PalpitecoModel.Rodadas" Role="Rodadas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campeonatos">
+              <PropertyRef Name="IdCampeonato" />
+            </Principal>
+            <Dependent Role="Rodadas">
+              <PropertyRef Name="IdCampeonato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Jogadores_dbo_Perfil_IdPerfil">
+          <End Type="PalpitecoModel.Perfil" Role="Perfil" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PalpitecoModel.Jogadores" Role="Jogadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Perfil">
+              <PropertyRef Name="IdPerfil" />
+            </Principal>
+            <Dependent Role="Jogadores">
+              <PropertyRef Name="IdPerfil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Palpites_Jogadores">
+          <End Type="PalpitecoModel.Jogadores" Role="Jogadores" Multiplicity="1" />
+          <End Type="PalpitecoModel.Palpites" Role="Palpites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jogadores">
+              <PropertyRef Name="IdJogador" />
+            </Principal>
+            <Dependent Role="Palpites">
+              <PropertyRef Name="IdJogador" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jogos_ToTable">
+          <End Type="PalpitecoModel.Rodadas" Role="Rodadas" Multiplicity="1" />
+          <End Type="PalpitecoModel.Jogos" Role="Jogos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rodadas">
+              <PropertyRef Name="IdRodada" />
+            </Principal>
+            <Dependent Role="Jogos">
+              <PropertyRef Name="IdRodada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Palpites_Jogo">
+          <End Type="PalpitecoModel.Jogos" Role="Jogos" Multiplicity="1" />
+          <End Type="PalpitecoModel.Palpites" Role="Palpites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jogos">
+              <PropertyRef Name="IdJogo" />
+            </Principal>
+            <Dependent Role="Palpites">
+              <PropertyRef Name="IdJogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Palpites_Rodada">
+          <End Type="PalpitecoModel.Rodadas" Role="Rodadas" Multiplicity="1" />
+          <End Type="PalpitecoModel.Palpites" Role="Palpites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rodadas">
+              <PropertyRef Name="IdRodada" />
+            </Principal>
+            <Dependent Role="Palpites">
+              <PropertyRef Name="IdRodada" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PalpitecoModelStoreContainer" CdmEntityContainer="PalpitecoEntities">
+          <EntitySetMapping Name="Campeonatos">
+            <EntityTypeMapping TypeName="PalpitecoModel.Campeonatos">
+              <MappingFragment StoreEntitySet="Campeonatos">
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IdCampeonato" ColumnName="IdCampeonato" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clubes">
+            <EntityTypeMapping TypeName="PalpitecoModel.Clubes">
+              <MappingFragment StoreEntitySet="Clubes">
+                <ScalarProperty Name="CaminhoBandeira" ColumnName="CaminhoBandeira" />
+                <ScalarProperty Name="Serie" ColumnName="Serie" />
+                <ScalarProperty Name="SiglaEstado" ColumnName="SiglaEstado" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IdClube" ColumnName="IdClube" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jogadores">
+            <EntityTypeMapping TypeName="PalpitecoModel.Jogadores">
+              <MappingFragment StoreEntitySet="Jogadores">
+                <ScalarProperty Name="FotoPerfil" ColumnName="FotoPerfil" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+                <ScalarProperty Name="DataCadastro" ColumnName="DataCadastro" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="IdJogador" ColumnName="IdJogador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="JogadorXPalpite">
+            <EntityTypeMapping TypeName="PalpitecoModel.JogadorXPalpite">
+              <MappingFragment StoreEntitySet="JogadorXPalpite">
+                <ScalarProperty Name="IdPalpite" ColumnName="IdPalpite" />
+                <ScalarProperty Name="IdJogador" ColumnName="IdJogador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Jogos">
+            <EntityTypeMapping TypeName="PalpitecoModel.Jogos">
+              <MappingFragment StoreEntitySet="Jogos">
+                <ScalarProperty Name="IdRodada" ColumnName="IdRodada" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="GolVisitante" ColumnName="GolVisitante" />
+                <ScalarProperty Name="TimeVisitante" ColumnName="TimeVisitante" />
+                <ScalarProperty Name="GolCasa" ColumnName="GolCasa" />
+                <ScalarProperty Name="TimeCasa" ColumnName="TimeCasa" />
+                <ScalarProperty Name="IdJogo" ColumnName="IdJogo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Palpites">
+            <EntityTypeMapping TypeName="PalpitecoModel.Palpites">
+              <MappingFragment StoreEntitySet="Palpites">
+                <ScalarProperty Name="IdJogador" ColumnName="IdJogador" />
+                <ScalarProperty Name="IdJogo" ColumnName="IdJogo" />
+                <ScalarProperty Name="IdRodada" ColumnName="IdRodada" />
+                <ScalarProperty Name="Data" ColumnName="Data" />
+                <ScalarProperty Name="PontosFeitos" ColumnName="PontosFeitos" />
+                <ScalarProperty Name="GolVisitante" ColumnName="GolVisitante" />
+                <ScalarProperty Name="TimeVisitante" ColumnName="TimeVisitante" />
+                <ScalarProperty Name="GolCasa" ColumnName="GolCasa" />
+                <ScalarProperty Name="TimeCasa" ColumnName="TimeCasa" />
+                <ScalarProperty Name="IdPalpite" ColumnName="IdPalpite" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Perfil">
+            <EntityTypeMapping TypeName="PalpitecoModel.Perfil">
+              <MappingFragment StoreEntitySet="Perfil">
+                <ScalarProperty Name="NomePerfil" ColumnName="NomePerfil" />
+                <ScalarProperty Name="IdPerfil" ColumnName="IdPerfil" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rodadas">
+            <EntityTypeMapping TypeName="PalpitecoModel.Rodadas">
+              <MappingFragment StoreEntitySet="Rodadas">
+                <ScalarProperty Name="IdCampeonato" ColumnName="IdCampeonato" />
+                <ScalarProperty Name="NomeRodada" ColumnName="NomeRodada" />
+                <ScalarProperty Name="NumRodada" ColumnName="NumRodada" />
+                <ScalarProperty Name="IdRodada" ColumnName="IdRodada" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

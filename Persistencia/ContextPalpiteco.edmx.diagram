@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2a918e60a3ea439aa41254918df860de" Name="Diagram1">
+        <EntityTypeShape EntityType="PalpitecoModel.Campeonatos" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="PalpitecoModel.Clubes" Width="1.5" PointX="7.75" PointY="5.75" />
+        <EntityTypeShape EntityType="PalpitecoModel.Jogadores" Width="1.5" PointX="5.25" PointY="5.25" />
+        <EntityTypeShape EntityType="PalpitecoModel.JogadorXPalpite" Width="1.5" PointX="0.75" PointY="8.75" />
+        <EntityTypeShape EntityType="PalpitecoModel.Jogos" Width="1.5" PointX="5.25" PointY="1.375" />
+        <EntityTypeShape EntityType="PalpitecoModel.Palpites" Width="1.5" PointX="7.5" PointY="1" />
+        <EntityTypeShape EntityType="PalpitecoModel.Perfil" Width="1.5" PointX="3" PointY="6" />
+        <EntityTypeShape EntityType="PalpitecoModel.Rodadas" Width="1.5" PointX="3" PointY="1.625" />
+        <AssociationConnector Association="PalpitecoModel.FK_Rodadas_Campeonato" />
+        <AssociationConnector Association="PalpitecoModel.FK_dbo_Jogadores_dbo_Perfil_IdPerfil" />
+        <AssociationConnector Association="PalpitecoModel.FK_Palpites_Jogadores" />
+        <AssociationConnector Association="PalpitecoModel.FK_Jogos_ToTable" />
+        <AssociationConnector Association="PalpitecoModel.FK_Palpites_Jogo" />
+        <AssociationConnector Association="PalpitecoModel.FK_Palpites_Rodada" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
