@@ -39,9 +39,10 @@
                 dataType: "json",
                 success: function (data) {
                     
-                    location.reload("false");
+                    RemoverLinha(id);
+                    //location.reload("false");
                     //$(this).closest('tr').remove();
-                    alert("Perfil excluído com sucesso!");
+                    alert("Excluido com sucesso!");
                 },
                 error: function (e) {
                     //HideLoading();
@@ -49,6 +50,10 @@
                     alert("Erro ao excluir o Perfil!");
                 }
             });
+        }
+
+        function RemoverLinha(id){
+            $("#tablePerfil tr").remove((":contains('" + id + "')"));
         }
 
         function BuscarPerfis() {
@@ -106,50 +111,23 @@
                 },
                 error: function (e) {
                     //HideLoading();
+                    console.log(JSON.stringify(data.d));
                     ShowModalAviso("Aviso", "Erro:" + e.error);
                 }
             });
         }
 
-        //function actionFormatter(value, row, index) {
-        //    return [
-        //        '<a class="like" href="javascript:void(0)" title="Like">',
-        //        '<i class="glyphicon glyphicon-heart"></i>',
-        //        '</a>',
-        //        '<a class="edit ml10" href="javascript:void(0)" title="Edit">',
-        //        '<i class="glyphicon glyphicon-edit"></i>',
-        //        '</a>',
-        //        '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
-        //        '<i class="glyphicon glyphicon-remove"></i>',
-        //        '</a>'
-        //    ].join('');
-        //}
-        //window.actionEvents = {
-        //    'click.like': function (e, value, row, index) {
-        //        alert('You click like icon, row: ' + JSON.stringify(row));
-        //        console.log(value, row, index);
-        //    },
-        //    'click.edit': function (e, value, row, index) {
-        //        alert('You click edit icon, row: ' + JSON.stringify(row));
-        //        console.log(value, row, index);
-        //    },
-        //    'click.remove': function (e, value, row, index) {
-        //        alert('You click remove icon, row: ' + JSON.stringify(row));
-        //        console.log(value, row, index);
-        //    }
-        //};
     </script>
     <br />
-    <div data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all" id="divTblPerfis">
+    <div data-form="ui-body-a" class="ui-body ui-body-a ui-corner-all ui-responsive" id="divTblPerfis">
         <article id="" class="entry widget">
             <h2 class="section-title">
                 <span>Lista de Perfis</span>
             </h2>
-            <table id="tablePerfil" class="table-bordered dataTable stripe table-stripe">
+            <table id="tablePerfil" class="table-bordered dataTable stripe table-stripe ui-responsive" style="align-items:center; text-align:center">
                 <thead>
                     <tr>
-
-                        <th>Id</th>
+                        <th>ID</th>
                         <th>Nome</th>
                         <th>Acoes</th>
                         <%-- <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Ações</th>--%>
@@ -159,25 +137,4 @@
         </article>
     </div>
 
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-  <!-- Modal -->
-  <div class="modal fade" id="modal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-info btn-lg" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      </div>
-    </div>
 </asp:Content>
