@@ -532,6 +532,7 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="Site\Administracao\CadastrarJogador.aspx" />
     <Content Include="Site\Administracao\CadastrarPerfil.aspx" />
     <Content Include="Site\Administracao\js\bootstrap-table\bootstrap-table-locale-all.js" />
     <Content Include="Site\Administracao\js\bootstrap-table\bootstrap-table-locale-all.min.js" />
@@ -826,7 +827,6 @@
     <Content Include="js\DataTable\Buttons-1.5.1\css\mixins.scss" />
     <None Include="Project_Readme.html" />
     <Content Include="Site.Mobile.Master" />
-    <Content Include="Site1.Master" />
     <Content Include="Site2.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -877,19 +877,19 @@
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
     </Compile>
-    <Compile Include="Site1.Master.cs">
-      <DependentUpon>Site1.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Site1.Master.designer.cs">
-      <DependentUpon>Site1.Master</DependentUpon>
-    </Compile>
     <Compile Include="Site2.Master.cs">
       <DependentUpon>Site2.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site2.Master.designer.cs">
       <DependentUpon>Site2.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Site\Administracao\CadastrarJogador.aspx.cs">
+      <DependentUpon>CadastrarJogador.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site\Administracao\CadastrarJogador.aspx.designer.cs">
+      <DependentUpon>CadastrarJogador.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site\Administracao\CadastrarPerfil.aspx.cs">
       <DependentUpon>CadastrarPerfil.aspx</DependentUpon>

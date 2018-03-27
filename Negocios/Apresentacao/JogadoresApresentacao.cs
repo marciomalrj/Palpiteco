@@ -10,7 +10,20 @@ using Persistencia;
 
 namespace Negocios.Apresentacao
 {
-    class JogadoresApresentacao
+    public class JogadoresApresentacao
     {
+        private Jogadores perfil = new Jogadores();
+        private RNJogadores rnPerfil = new RNJogadores();
+        private JogadoresView perfilView = new JogadoresView();
+        private List<Jogadores> jogadores = new List<Jogadores>();
+
+        public void CadastrarPerfil(JogadoresView jogadoresView)
+        {
+            perfil.NomePerfil = jogadoresView.Nome;
+            perfil.Jogadores = jogadoresView.;
+
+            rnPerfil.InserirPerfil(perfil);
+        }
+
     }
 }

@@ -33,8 +33,8 @@
 
             <fieldset class="ui-grid-a">
                 <%-- <div class="ui-block-a">--%>
-                <button data-icon="flat-settings" data-theme="a">Button A</button>
-                <button data-icon="flat-new" data-theme="b">Button B</button>
+                <button data-icon="flat-settings" data-theme="a">Configuração</button>
+                <button data-icon="flat-new" data-theme="b">Teste</button>
                 <%-- </div>--%>
                 <%--  <div class="ui-block-b">
                     <button data-icon="flat-new" data-theme="b">Button B</button>

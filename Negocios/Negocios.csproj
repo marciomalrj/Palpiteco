@@ -58,6 +58,7 @@
     <Compile Include="RN\RnGenerica.cs" />
     <Compile Include="RN\RNJogadores.cs" />
     <Compile Include="RN\RnPerfil.cs" />
+    <Compile Include="Views\JogadoresView.cs" />
     <Compile Include="Views\PerfilView.cs" />
   </ItemGroup>
   <ItemGroup>

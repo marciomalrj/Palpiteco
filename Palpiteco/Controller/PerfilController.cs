@@ -14,7 +14,7 @@ namespace Palpiteco.Controller
     {
         private PerfilApresentacao pa = new PerfilApresentacao();
         private Perfil perfil = new Perfil();
-        private RnPerfil rnPerfil = new RnPerfil();
+        //private RnPerfil rnPerfil = new RnPerfil();
 
         public void InserirPerfil(PerfilView perfil)
         {

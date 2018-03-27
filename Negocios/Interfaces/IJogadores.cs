@@ -10,6 +10,6 @@ namespace Negocios.Interfaces
 {
     interface IJogadores : IGenerica<Jogadores>
     {
-
+        List<Jogadores> RetornaJogadoresPerfil(int idPerfil);
     }
 }

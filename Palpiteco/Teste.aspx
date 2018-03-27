@@ -3,7 +3,6 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <asp:Button ID="Button1" runat="server" Text="Button" />
     <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
     <%--<label for="exampleInputEmail1">Email address</label>--%>
@@ -23,7 +22,7 @@
         &nbsp;
         <label class="form-check-label" for="Check1">Permanecer Logado</label>
         <br />
-        <button type="submit" class="btn btn-success pull-left" data-theme="g">Entrar</button>
+        
     </div>
-
+    <button type="submit" class="btn btn-success pull-left" data-theme="g">Entrar</button>
 </asp:Content>

@@ -27,7 +27,7 @@ namespace Negocios.RN
         {
             using (banco = new PalpitecoEntities())
             {
-                banco.Configuration.ProxyCreationEnabled = false;
+                banco.Configuration.ProxyCreationEnabled = false; // poder navegar entre os objetos
                 var t = banco.Set<TEntity>().ToList();
                 return banco.Set<TEntity>().ToList();
             }

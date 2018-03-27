@@ -9,27 +9,30 @@ using Negocios.RN;
 
 namespace Negocios.RN
 {
-    public class RNJogadores : RnGenerica<Jogadores>
+    public class RNJogadores //: RnGenerica<Jogadores>
     {
+        private IJogadores iJogador;
         private Jogadores p = new Jogadores();
         private PalpitecoEntities banco = new PalpitecoEntities();
-        public void InserirPerfil(Jogadores j)
+        public void InserirJogador(Jogadores j)
         {
-            Insert(j);
+            iJogador.Insert(j);
+            // Insert(j);
         }
-        public void AtualizarPerfil(Jogadores j)
+        public void AtualizarJogador(Jogadores j)
         {
-            Update(j);
+            iJogador.Update(j);
         }
 
         public void DeletarJogador(int id)
         {
-            var jogador = FindById(id);
-            Delete(jogador);
+            var jogador = iJogador.FindById(id);
+            iJogador.Delete(jogador);
         }
 
         public Jogadores RetornarPorId(int id)
         {
+
             using (PalpitecoEntities con = new PalpitecoEntities())
             {
                 return con.Jogadores.Where(j => p.IdJogador == id).First();
@@ -38,12 +41,12 @@ namespace Negocios.RN
 
         public List<Jogadores> RetornaListaJogadores()
         {
-            return FindAll();
+            return iJogador.FindAll();
         }
         public List<Jogadores> RetornaJogadoresPerfil(int idPerfil)
         {
             //List<Jogadores> lista = new List<Jogadores>();
-
+            //iJogadores.
             var jogadores = banco.Jogadores.Where(j => j.IdPerfil == idPerfil).ToList();
             return jogadores;
         }
